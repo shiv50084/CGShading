@@ -1,0 +1,27 @@
+CC = g++
+CFLAGS = -Wall
+LIBS = -lglut -lGLU -lGL
+
+demo : demo.o transformations.o projections.o vectors.o shadings.o utils.o
+	$(CC) $(LIBS) $(CFLAGS) -o demo demo.o transformations.o projections.o vectors.o shadings.o utils.o
+
+demo.o : demo.c
+	$(CC) -c demo.c
+
+transformations.o : transformations.c
+	$(CC) -c transformations.c
+
+projections.o : projections.c
+	$(CC) -c projections.c
+
+vectors.o : vectors.c
+	$(CC) -c vectors.c
+
+shadings.o : shadings.c
+	$(CC) -c shadings.c
+
+utils.o : utils.c
+	$(CC) -c utils.c
+
+clean :
+	rm -f demo.o demo transformations.o projections.o vectors.o shadings.o utils.o

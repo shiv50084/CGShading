@@ -1,0 +1,72 @@
+In this practical the files used are the following:
+
+Files				Description
+====================		=====================
+utils.c				Some general utilities that I need.
+utils.h				Header of utils.c
+vectors.c			Some vector utilities(Lot's of them are from Graphic Gems Repository)
+vectors.h			Header of vectors.c
+transformations.c		Transoformations of vertices and points
+transformations.h		Header of transformations.c
+projections.c			Projections of vertices and points
+projections.h			Header of projections.c
+shadings.c			Lighting and Shading of object
+shadings.h			Header of shadings.c
+demo.c				Main file
+demo.h				Header of main file
+MIT_teapot.obj			Object to be coloured.
+README				This file
+Makefile			The make file to build this project
+
+
+Building this project
+------------------------
+Just use the following command:
+
+s0954319: make
+
+If you want to make a change and want to build it again then do cleaning
+and then make:
+
+s0954319: make clean
+s0954319: make
+
+
+Running this project
+-------------------------
+The file that will be produced after building will be demo. So you run it as
+following:
+
+s0954319: ./demo  MIT_teapot.obj <shading algorithm>
+
+<shading algorithm>: flat, gouraud, phong
+
+
+Using some keyboards keys and mouse you can interact with the object.These are
+the following:
+
+ARROW KEYS:		Translation of object.
+< or > :		Rotation in Y axis.
+PG UP or PG DOWN:	Rotation in X axis.
+( or ) :		Rotation in Z axis.
++ or - :		Scaling object.
+[ or ] :		Perspective projection.
+F1 :			RED Colour
+F2 :			GREEN Colour
+F3 :			BLUE Colour
+F4 :			WHITE Colour
+ESC:			Exit from the application.
+MOUSE BUTTONS:
+	LEFT BUTTON:	Pressing the left button you put a light source in the x, y coordinates of the mouse pointer. Each 
+			time you press the button the z value increases by 50 up to 500. Then it starts from position -500.
+	RIGHT BUTTON:	Pressing the right button you put the camera in the x, y coordinates of the mouse pointer. Each time 
+			you press the button the z value increases by 50 up to 500. Then it starts from position -500.(Only in Phong Shading).
+
+
+ATTENTION
+-----------
+The first time that will run the program, a black screen with no object is going to appear. Just put a colour by using
+F1 or F2 or F3 or F4 and left click with the mouse to a point in the screen in order to put the light source.
+BONUS: I have implemented Perspective projection, Phong shading and object movement.
+
+
