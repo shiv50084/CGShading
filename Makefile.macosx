@@ -1,11 +1,11 @@
 LIBPATH += -L"/System/Library/Frameworks/OpenGL.framework/Libraries"
 
 FRAMEWORK = -framework GLUT
-FRAMEWORK += -framework OpenGL 
+FRAMEWORK += -framework OpenGL
 
-COMPILERFLAGS = -Wall 
-CC = g++ 
-CFLAGS = $(COMPILERFLAGS) 
+COMPILERFLAGS = -Wall
+CC = gcc
+CFLAGS = $(COMPILERFLAGS)
 LIBRARIES = -lGL -lGLU -lm -lobjc -lstdc++
 
 demo : demo.o transformations.o projections.o vectors.o shadings.o utils.o
