@@ -39,7 +39,7 @@ void TriangleMesh_LoadFile(char *filename)
 
     if((fp = fopen(filename, "r")) == NULL)
     {
-        printf("Cannot open file %s for reading.\n");
+        printf("Cannot open file %s for reading.\n", filename);
         exit(1);
     }
 
