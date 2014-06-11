@@ -38,97 +38,93 @@ Matrix
 */
 void Parallel_Projection_3D_Point(VECTOR3F LeftBottomNear, VECTOR3F RightTopFar, VECTOR3F *point_3d)
 {
-VECTOR3F temp_point;
+    VECTOR3F temp_point;
 
-temp_point.x = point_3d->x;
-temp_point.y = point_3d->y;
-temp_point.z = point_3d->z;
+    temp_point.x = point_3d->x;
+    temp_point.y = point_3d->y;
+    temp_point.z = point_3d->z;
 
-point_3d->x = ((2*temp_point.x) - (RightTopFar.x + LeftBottomNear.x))/(RightTopFar.x - LeftBottomNear.x); 
-point_3d->y = ((2*temp_point.y) - (RightTopFar.y + LeftBottomNear.y))/(RightTopFar.y - LeftBottomNear.y);
-point_3d->z = (temp_point.z - LeftBottomNear.z)/(RightTopFar.z - LeftBottomNear.z);
-
+    point_3d->x = ((2*temp_point.x) - (RightTopFar.x + LeftBottomNear.x))/(RightTopFar.x - LeftBottomNear.x);
+    point_3d->y = ((2*temp_point.y) - (RightTopFar.y + LeftBottomNear.y))/(RightTopFar.y - LeftBottomNear.y);
+    point_3d->z = (temp_point.z - LeftBottomNear.z)/(RightTopFar.z - LeftBottomNear.z);
 }
 
 VECTOR3F *Parallel_Projection_3D_Vertices(VECTOR3F LeftBottomNear, VECTOR3F RightTopFar, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    int minx = 0, maxx = 0, miny = 0, maxy = 0;
+    int i = 0, j = 0, vector = 0, triangle = 0;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Parallel_Projection\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Parallel_Projection\n", max_vectors);
+        exit(0);
+    }
 
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
+    for (triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+        Parallel_Projection_3D_Point(LeftBottomNear, RightTopFar, &V1);
+        Parallel_Projection_3D_Point(LeftBottomNear, RightTopFar, &V2);
+        Parallel_Projection_3D_Point(LeftBottomNear, RightTopFar, &V3);
 
-	Parallel_Projection_3D_Point(LeftBottomNear, RightTopFar, &V1);
-	Parallel_Projection_3D_Point(LeftBottomNear, RightTopFar, &V2);
-	Parallel_Projection_3D_Point(LeftBottomNear, RightTopFar, &V3);
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
-
-return Output;
+    return Output;
 }
 
 
 
 void Parallel_Projection_3D_Point_Simple(VECTOR3F *point_3d)
 {
-VECTOR3F temp_point;
+    VECTOR3F temp_point;
 
-temp_point.x = point_3d->x;
-temp_point.y = point_3d->y;
-temp_point.z = point_3d->z;
+    temp_point.x = point_3d->x;
+    temp_point.y = point_3d->y;
+    temp_point.z = point_3d->z;
 
-point_3d->x = temp_point.x;
-point_3d->y = temp_point.y;
-point_3d->z = 0;
-
+    point_3d->x = temp_point.x;
+    point_3d->y = temp_point.y;
+    point_3d->z = 0;
 }
 
 
 VECTOR3F *Parallel_Projection_3D_Vertices_Simple(TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    int minx = 0, maxx = 0, miny = 0, maxy = 0;
+    int i = 0, j = 0, vector = 0, triangle = 0;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Parallel_Projection\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Parallel_Projection\n", max_vectors);
+        exit(0);
+    }
 
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
+    for (triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+        Parallel_Projection_3D_Point_Simple(&V1);
+        Parallel_Projection_3D_Point_Simple(&V2);
+        Parallel_Projection_3D_Point_Simple(&V3);
 
-	Parallel_Projection_3D_Point_Simple(&V1);
-	Parallel_Projection_3D_Point_Simple(&V2);
-	Parallel_Projection_3D_Point_Simple(&V3);
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
-
-return Output;
+    return Output;
 }
 
 /*
@@ -143,98 +139,96 @@ Matrix
 
 void Perspective_Projection_3D_Point(VECTOR3F LeftBottomNear, VECTOR3F RightTopFar, VECTOR3F *point_3d)
 {
-VECTOR3F temp_point;
+    VECTOR3F temp_point;
 
-temp_point.x = point_3d->x;
-temp_point.y = point_3d->y;
-temp_point.z = point_3d->z;
+    temp_point.x = point_3d->x;
+    temp_point.y = point_3d->y;
+    temp_point.z = point_3d->z;
 
 
-point_3d->x = ((2*LeftBottomNear.z*temp_point.x)-((RightTopFar.x+LeftBottomNear.x)*temp_point.z))/(RightTopFar.x-LeftBottomNear.x);
-point_3d->y = ((2*LeftBottomNear.z*temp_point.y)-((RightTopFar.y+LeftBottomNear.y)*temp_point.z))/(RightTopFar.y-LeftBottomNear.y);
-point_3d->z = ((RightTopFar.z*temp_point.z)-(RightTopFar.z*LeftBottomNear.z))/(RightTopFar.z-LeftBottomNear.z);
-
+    point_3d->x = ((2*LeftBottomNear.z*temp_point.x)-((RightTopFar.x+LeftBottomNear.x)*temp_point.z))/(RightTopFar.x-LeftBottomNear.x);
+    point_3d->y = ((2*LeftBottomNear.z*temp_point.y)-((RightTopFar.y+LeftBottomNear.y)*temp_point.z))/(RightTopFar.y-LeftBottomNear.y);
+    point_3d->z = ((RightTopFar.z*temp_point.z)-(RightTopFar.z*LeftBottomNear.z))/(RightTopFar.z-LeftBottomNear.z);
 }
 
 VECTOR3F *Perspective_Projection_3D_Vertices(VECTOR3F LeftBottomNear, VECTOR3F RightTopFar, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    int minx = 0, maxx = 0, miny = 0, maxy = 0;
+    int i = 0, j = 0, vector = 0, triangle = 0;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Perspective_Projection\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Perspective_Projection\n", max_vectors);
+        exit(0);
+    }
 
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
+    for (triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+        Perspective_Projection_3D_Point(LeftBottomNear, RightTopFar, &V1);
+        Perspective_Projection_3D_Point(LeftBottomNear, RightTopFar, &V2);
+        Perspective_Projection_3D_Point(LeftBottomNear, RightTopFar, &V3);
 
-	Perspective_Projection_3D_Point(LeftBottomNear, RightTopFar, &V1);
-	Perspective_Projection_3D_Point(LeftBottomNear, RightTopFar, &V2);
-	Perspective_Projection_3D_Point(LeftBottomNear, RightTopFar, &V3);
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
-
-return Output;
+    return Output;
 }
 
 void Perspective_Projection_3D_Point_Simple(float d, VECTOR3F *point_3d)
 {
-VECTOR3F temp_point;
-float w = 0.0;
+    VECTOR3F temp_point;
+    float w = 0.0;
 
-temp_point.x = point_3d->x;
-temp_point.y = point_3d->y;
-temp_point.z = point_3d->z;
+    temp_point.x = point_3d->x;
+    temp_point.y = point_3d->y;
+    temp_point.z = point_3d->z;
 
-if (d <= 0.0)
-	d = 1.0;
+    if (d <= 0.0)
+        d = 1.0;
 
-w = 1.0 / d;
+    w = 1.0 / d;
 
-point_3d->x = (temp_point.x) * w;
-point_3d->y = (temp_point.y) * w;
+    point_3d->x = (temp_point.x) * w;
+    point_3d->y = (temp_point.y) * w;
 
 }
 
 VECTOR3F *Perspective_Projection_3D_Vertices_Simple(float d, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    int minx = 0, maxx = 0, miny = 0, maxy = 0;
+    int i = 0, j = 0, vector = 0, triangle = 0;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Perspective_Projection\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Perspective_Projection\n", max_vectors);
+        exit(0);
+    }
 
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
+    for (triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+        Perspective_Projection_3D_Point_Simple(d, &V1);
+        Perspective_Projection_3D_Point_Simple(d, &V2);
+        Perspective_Projection_3D_Point_Simple(d, &V3);
 
-	Perspective_Projection_3D_Point_Simple(d, &V1);
-	Perspective_Projection_3D_Point_Simple(d, &V2);
-	Perspective_Projection_3D_Point_Simple(d, &V3);
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
-
-return Output;
+    return Output;
 }
+

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <math.h>
 #include <ctype.h>
 #include <string.h>
@@ -40,26 +41,26 @@
 
 /*Typedef structures declaration*/
 typedef struct vector3f
-	{
-	float x, y, z;/*3D coordinates*/
-	}VECTOR3F;
+{
+    float x, y, z;/*3D coordinates*/
+}VECTOR3F;
 
 typedef struct triangle
-	{
-	int v1, v2, v3;
-	}TRIANGLE;
+{
+    int32_t v1, v2, v3;
+}TRIANGLE;
 
 typedef struct color
-	{
-	float r, g, b;
-	}COLOR;
+{
+    float r, g, b;
+}COLOR;
 
 typedef struct trianglemesh
-	{
-	int	 triangle;	/*Triangle number*/
-	TRIANGLE vertices;	/*Triangle vertices*/
-	VECTOR3F vert_3d;	/*Triangle Vertices in 3D coordinates*/
-	}TRIANGLEMESH;
+{
+    int32_t triangle;	/*Triangle number*/
+    TRIANGLE vertices;	/*Triangle vertices*/
+    VECTOR3F vert_3d;	/*Triangle Vertices in 3D coordinates*/
+}TRIANGLEMESH;
 
 void Normal_Vector_Calc(VECTOR3F, VECTOR3F, VECTOR3F, VECTOR3F *);
 void TriangleMesh_LoadFile(char *);
