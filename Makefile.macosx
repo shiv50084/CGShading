@@ -3,7 +3,7 @@ LIBPATH += -L"/System/Library/Frameworks/OpenGL.framework/Libraries"
 FRAMEWORK = -framework GLUT
 FRAMEWORK += -framework OpenGL
 
-COMPILERFLAGS = -Wall
+COMPILERFLAGS = -std=c99 -Wall
 CC = gcc
 CFLAGS = $(COMPILERFLAGS)
 LIBRARIES = -lGL -lGLU -lm -lobjc -lstdc++
@@ -12,22 +12,22 @@ demo : demo.o transformations.o projections.o vectors.o shadings.o utils.o
 	$(CC) $(FRAMEWORK) $(CFLAGS) -o demo demo.o transformations.o projections.o vectors.o shadings.o utils.o
 
 demo.o : demo.c
-	$(CC) -c demo.c
+	$(CC) $(CFLAGS) -c demo.c
 
 transformations.o : transformations.c
-	$(CC) -c transformations.c
+	$(CC) $(CFLAGS) -c transformations.c
 
 projections.o : projections.c
-	$(CC) -c projections.c
+	$(CC) $(CFLAGS) -c projections.c
 
 vectors.o : vectors.c
-	$(CC) -c vectors.c
+	$(CC) $(CFLAGS) -c vectors.c
 
 shadings.o : shadings.c
-	$(CC) -c shadings.c
+	$(CC) $(CFLAGS) -c shadings.c
 
 utils.o : utils.c
-	$(CC) -c utils.c
+	$(CC) $(CFLAGS) -c utils.c
 
 clean :
 	rm -f demo.o demo transformations.o projections.o vectors.o shadings.o utils.o
