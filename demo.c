@@ -31,8 +31,7 @@ void TriangleMesh_LoadFile(char *filename)
     float 	x = 0.0, y = 0.0, z = 0.0;
     float 	xmax = 0.0, ymax = 0.0, zmax = 0.0,
             xmin = 0.0, ymin = 0.0, zmin = 0.0;
-    int 	v1 = 0, v2 = 0, v3 = 0,
-            n1 = 0, n2 = 0, n3 = 0;
+    int 	v1 = 0, v2 = 0, v3 = 0;
 
     memset(buf, 0, sizeof(buf));
     memset(header, 0, sizeof(header));
@@ -441,8 +440,6 @@ void usage(char *argv0)
 
 int main(int argc, char **argv)
 {
-    int width, height;
-
     memset(&shading_name, '\0', sizeof(shading_name));
 
     if (argc ==  3)
