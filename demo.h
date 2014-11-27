@@ -31,10 +31,6 @@
 
 #define	LARGE_VALUE 1000000.0
 
-/* Pragmas */
-#pragma option align=packed
-#pragma pack(1)
-
 #define FLAT	"flat"
 #define GOURAUD	"gouraud"
 #define PHONG	"phong"
