@@ -6,7 +6,7 @@
 #include "utils.h"
 
 /*Global variables*/
-TRIANGLEMESH	trig_mesh;
+TRIANGLEMESH    trig_mesh;
 TRIANGLE        *trig;
 VECTOR3F        *vec;
 COLOR           rgb;//color
@@ -15,23 +15,23 @@ VECTOR3F        c;//camera
 char            shading_name[20];
 
 float	_xmax = 0.0, _xmin = 0.0,
-		_ymax = 0.0, _ymin = 0.0,
-		_zmin = 0.0, _zmax = 0.0;
+	_ymax = 0.0, _ymin = 0.0,
+	_zmin = 0.0, _zmax = 0.0;
 int 	v_counter = 0, f_counter = 0,
-		i_v = 0, i_f = 0;
+	i_v = 0, i_f = 0;
 
 int nRows = 640;
 int nCols = 480;
 
 void TriangleMesh_LoadFile(char *filename)
 {
-    FILE 	*fp;
-    char 	buf[1024];
-    char 	header[100];
-    float 	x = 0.0, y = 0.0, z = 0.0;
-    float 	xmax = 0.0, ymax = 0.0, zmax = 0.0,
+    FILE    *fp;
+    char    buf[1024];
+    char    header[100];
+    float   x = 0.0, y = 0.0, z = 0.0;
+    float   xmax = 0.0, ymax = 0.0, zmax = 0.0,
             xmin = 0.0, ymin = 0.0, zmin = 0.0;
-    int 	v1 = 0, v2 = 0, v3 = 0;
+    int     v1 = 0, v2 = 0, v3 = 0;
 
     memset(buf, 0, sizeof(buf));
     memset(header, 0, sizeof(header));
@@ -54,7 +54,7 @@ void TriangleMesh_LoadFile(char *filename)
             sscanf(buf, "%s", header);
 
             if (strcmp(header, "v") == 0)
-                    v_counter++;
+                v_counter++;
             else if (strcmp(header, "f") == 0)
                 f_counter++;
             else
@@ -173,90 +173,90 @@ void keyboardNormalKeys(unsigned char key, int x, int y)
     switch(key)
     {
         case 27://esc
-                free(trig);
-                free(vec);
-                exit(0);
-                break;
+            free(trig);
+            free(vec);
+            exit(0);
+            break;
         case 62://> Rotation Y
-                theta -= 5;
-                vec = Rotation_Y_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
+            theta -= 5;
+            vec = Rotation_Y_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
-                printf("Rotation Y Axis(theta)=(%.3f)\n", theta);
+            printf("Rotation Y Axis(theta)=(%.3f)\n", theta);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case 60://< Rotation Y
-                theta += 5;
-                vec = Rotation_Y_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
+            theta += 5;
+            vec = Rotation_Y_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
-                printf("Rotation Y Axis(theta)=(%.3f)\n", theta);
+            printf("Rotation Y Axis(theta)=(%.3f)\n", theta);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case 41://) Rotation Z
-                theta -= 5;
-                vec = Rotation_Z_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
+            theta -= 5;
+            vec = Rotation_Z_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
-                printf("Rotation Z Axis(theta)=(%.3f)\n", theta);
+            printf("Rotation Z Axis(theta)=(%.3f)\n", theta);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case 40://( Rotation Z
-                theta += 5;
-                vec = Rotation_Z_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
+            theta += 5;
+            vec = Rotation_Z_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
-                printf("Rotation Z Axis(theta)=(%.3f)\n", theta);
+            printf("Rotation Z Axis(theta)=(%.3f)\n", theta);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case 43://+ scale
-                scal += 0.1;
-                vec = Scale_3D_Vertices(scal, scal, scal, trig, f_counter, vec, v_counter);
+            scal += 0.1;
+            vec = Scale_3D_Vertices(scal, scal, scal, trig, f_counter, vec, v_counter);
 
-                printf("Scale (factor)=(%.3f)\n", scal);
+            printf("Scale (factor)=(%.3f)\n", scal);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case 45://- scale
-                scal -= 0.1;
-                vec = Scale_3D_Vertices(scal, scal, scal, trig, f_counter, vec, v_counter);
+            scal -= 0.1;
+            vec = Scale_3D_Vertices(scal, scal, scal, trig, f_counter, vec, v_counter);
 
-                printf("Scale (factor)=(%.3f)\n", scal);
+            printf("Scale (factor)=(%.3f)\n", scal);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case 91://[ prespective
-                presp_d -= 0.1;
+            presp_d -= 0.1;
 
-                if (presp_d != 0.0)
-                    vec = Perspective_Projection_3D_Vertices_Simple(presp_d, trig, f_counter, vec, v_counter);
-                else
-                    vec = Perspective_Projection_3D_Vertices_Simple(1.0, trig, f_counter, vec, v_counter);
+            if (presp_d != 0.0)
+                vec = Perspective_Projection_3D_Vertices_Simple(presp_d, trig, f_counter, vec, v_counter);
+            else
+                vec = Perspective_Projection_3D_Vertices_Simple(1.0, trig, f_counter, vec, v_counter);
 
-                printf("Perspective (d)=(%.3f)\n", presp_d);
+            printf("Perspective (d)=(%.3f)\n", presp_d);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case 93://] prespective
-                presp_d += 0.1;
+            presp_d += 0.1;
 
-                if (presp_d != 0.0)
-                    vec = Perspective_Projection_3D_Vertices_Simple(presp_d, trig, f_counter, vec, v_counter);
-                else
-                    vec = Perspective_Projection_3D_Vertices_Simple(1.0, trig, f_counter, vec, v_counter);
+            if (presp_d != 0.0)
+                vec = Perspective_Projection_3D_Vertices_Simple(presp_d, trig, f_counter, vec, v_counter);
+            else
+                vec = Perspective_Projection_3D_Vertices_Simple(1.0, trig, f_counter, vec, v_counter);
 
-                printf("Perspective (d)=(%.3f)\n", presp_d);
+            printf("Perspective (d)=(%.3f)\n", presp_d);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
     }
 
 }
@@ -268,88 +268,87 @@ void keyboardSpecialKeys(int key, int x, int y)
     switch(key)
     {
         case GLUT_KEY_F1://F1 red
-                rgb.r = 1.0;rgb.g = 0.0;rgb.b = 0.0;
+            rgb.r = 1.0;rgb.g = 0.0;rgb.b = 0.0;
 
-                printf("Color RED\n");
-                Choose_Display(shading_name);
+            printf("Color RED\n");
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_F2://F2 green
-                rgb.r = 0.0;rgb.g = 1.0;rgb.b = 0.0;
+            rgb.r = 0.0;rgb.g = 1.0;rgb.b = 0.0;
 
-                printf("Color GREEN\n");
-                Choose_Display(shading_name);
+            printf("Color GREEN\n");
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_F3://F3 blue
-                rgb.r = 0.0;rgb.g = 0.0;rgb.b = 1.0;
+            rgb.r = 0.0;rgb.g = 0.0;rgb.b = 1.0;
 
-                printf("Color BLUE\n");
-                Choose_Display(shading_name);
+            printf("Color BLUE\n");
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_F4://F4 white grayscale
-                rgb.r = 1.0;rgb.g = 1.0;rgb.b = 1.0;
+            rgb.r = 1.0;rgb.g = 1.0;rgb.b = 1.0;
 
-                printf("Color WHITE\n");
-                Choose_Display(shading_name);
+            printf("Color WHITE\n");
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_PAGE_UP://PG UP rotate x axis
-                theta += 5;
-                vec = Rotation_X_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
+            theta += 5;
+            vec = Rotation_X_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
-                printf("Rotation X Axis(theta)=(%.3f)\n", theta);
+            printf("Rotation X Axis(theta)=(%.3f)\n", theta);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_PAGE_DOWN://PG DOWN rotate x axis
-                theta -= 5;
-                vec = Rotation_X_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
+            theta -= 5;
+            vec = Rotation_X_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
-                printf("Rotation X Axis(theta)=(%.3f)\n", theta);
+            printf("Rotation X Axis(theta)=(%.3f)\n", theta);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_RIGHT://Right translation
-                transl += 10;
-                vec = Translation_3D_Vertices(transl, 0.0, 0.0, trig, f_counter, vec, v_counter);
+            transl += 10;
+            vec = Translation_3D_Vertices(transl, 0.0, 0.0, trig, f_counter, vec, v_counter);
 
-                printf("Translation X Axis(dx)=(%.3f)\n", transl);
+            printf("Translation X Axis(dx)=(%.3f)\n", transl);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_LEFT://Left translation
-                transl -= 10;
-                vec = Translation_3D_Vertices(transl, 0.0, 0.0, trig, f_counter, vec, v_counter);
+            transl -= 10;
+            vec = Translation_3D_Vertices(transl, 0.0, 0.0, trig, f_counter, vec, v_counter);
 
-                printf("Translation X Axis(dx)=(%.3f)\n", transl);
+            printf("Translation X Axis(dx)=(%.3f)\n", transl);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_UP://Up translation
-                transl += 10;
-                vec = Translation_3D_Vertices(0.0, transl, 0.0, trig, f_counter, vec, v_counter);
+            transl += 10;
+            vec = Translation_3D_Vertices(0.0, transl, 0.0, trig, f_counter, vec, v_counter);
 
-                printf("Translation Y Axis(dy)=(%.3f)\n", transl);
+            printf("Translation Y Axis(dy)=(%.3f)\n", transl);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
         case GLUT_KEY_DOWN://Down translation
-                transl -= 10;
-                vec = Translation_3D_Vertices(0.0, transl, 0.0, trig, f_counter, vec, v_counter);
+            transl -= 10;
+            vec = Translation_3D_Vertices(0.0, transl, 0.0, trig, f_counter, vec, v_counter);
 
-                printf("Translation Y Axis(dy)=(%.3f)\n", transl);
+            printf("Translation Y Axis(dy)=(%.3f)\n", transl);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
-
+            break;
     }
 }
 
@@ -359,36 +358,35 @@ void mouseMov(int button, int state, int x, int y)
     switch(button)
     {
         case GLUT_LEFT_BUTTON:
-                if (state == GLUT_DOWN)
-                {
-                    l.z += 50.0;
-                    if (l.z > 500.0)
-                        l.z = -500.0;
-                }
+            if (state == GLUT_DOWN)
+            {
+                l.z += 50.0;
+                if (l.z > 500.0)
+                    l.z = -500.0;
+            }
 
-                l.x = x;l.y = y;
+            l.x = x;l.y = y;
 
-                printf("Light(x, y, z)=(%.3f, %.3f, %.3f)\n", l.x, l.y, l.z);
+            printf("Light(x, y, z)=(%.3f, %.3f, %.3f)\n", l.x, l.y, l.z);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-
-                break;
+            break;
         case GLUT_RIGHT_BUTTON:
-                if (state == GLUT_DOWN)
-                {
-                    c.z += 50.0;
-                    if (c.z > 500.0)
-                        c.z = -500.0;
-                }
+            if (state == GLUT_DOWN)
+            {
+                c.z += 50.0;
+                if (c.z > 500.0)
+                    c.z = -500.0;
+            }
 
-                c.x = x;c.y = y;
+            c.x = x;c.y = y;
 
-                printf("Camera(x, y, z)=(%.3f, %.3f, %.3f)\n", c.x, c.y, c.z);
+            printf("Camera(x, y, z)=(%.3f, %.3f, %.3f)\n", c.x, c.y, c.z);
 
-                Choose_Display(shading_name);
+            Choose_Display(shading_name);
 
-                break;
+            break;
     }
 }
 
