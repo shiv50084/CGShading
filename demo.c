@@ -431,6 +431,14 @@ void Choose_Display(char *shad_name)
         Phong_Display();
 }
 
+void usage(char *argv0)
+{
+    printf("Usage: %s <filename> <shading>\n", argv0);
+    printf("filename: filename of the 3D computer model in .obj format.\n");
+    printf("shading: flat, gouraud or phong.\n");
+    exit(1);
+}
+
 int main(int argc, char **argv)
 {
     int width, height;
@@ -446,17 +454,11 @@ int main(int argc, char **argv)
         if (!(strcmp(shading_name, FLAT) || 
               strcmp(shading_name, GOURAUD) || 
               strcmp(shading_name, PHONG)))
-        {
-            printf("Usage: %s <filename> <shading>\n", argv[0]);
-            exit(1);
-        }
+            usage(argv[0]);
 
     }
     else
-    {
-        printf("Usage: %s <filename> <shading>\n", argv[0]);
-        exit(1);
-    }
+        usage(argv[0]);
 
     glutInit(&argc, argv);
     glutInitWindowSize(nRows, nCols);
