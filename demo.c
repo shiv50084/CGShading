@@ -183,16 +183,12 @@ void keyboardNormalKeys(unsigned char key, int x, int y)
 
             printf("Rotation Y Axis(theta)=(%.3f)\n", theta);
 
-            Choose_Display(shading_name);
-
             break;
         case 60://< Rotation Y
             theta += 5;
             vec = Rotation_Y_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
             printf("Rotation Y Axis(theta)=(%.3f)\n", theta);
-
-            Choose_Display(shading_name);
 
             break;
         case 41://) Rotation Z
@@ -201,16 +197,12 @@ void keyboardNormalKeys(unsigned char key, int x, int y)
 
             printf("Rotation Z Axis(theta)=(%.3f)\n", theta);
 
-            Choose_Display(shading_name);
-
             break;
         case 40://( Rotation Z
             theta += 5;
             vec = Rotation_Z_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
             printf("Rotation Z Axis(theta)=(%.3f)\n", theta);
-
-            Choose_Display(shading_name);
 
             break;
         case 43://+ scale
@@ -219,16 +211,12 @@ void keyboardNormalKeys(unsigned char key, int x, int y)
 
             printf("Scale (factor)=(%.3f)\n", scal);
 
-            Choose_Display(shading_name);
-
             break;
         case 45://- scale
             scal -= 0.1;
             vec = Scale_3D_Vertices(scal, scal, scal, trig, f_counter, vec, v_counter);
 
             printf("Scale (factor)=(%.3f)\n", scal);
-
-            Choose_Display(shading_name);
 
             break;
         case 91://[ prespective
@@ -241,8 +229,6 @@ void keyboardNormalKeys(unsigned char key, int x, int y)
 
             printf("Perspective (d)=(%.3f)\n", presp_d);
 
-            Choose_Display(shading_name);
-
             break;
         case 93://] prespective
             presp_d += 0.1;
@@ -254,10 +240,10 @@ void keyboardNormalKeys(unsigned char key, int x, int y)
 
             printf("Perspective (d)=(%.3f)\n", presp_d);
 
-            Choose_Display(shading_name);
-
             break;
     }
+
+    Choose_Display(shading_name);
 
 }
 
@@ -271,28 +257,24 @@ void keyboardSpecialKeys(int key, int x, int y)
             rgb.r = 1.0;rgb.g = 0.0;rgb.b = 0.0;
 
             printf("Color RED\n");
-            Choose_Display(shading_name);
 
             break;
         case GLUT_KEY_F2://F2 green
             rgb.r = 0.0;rgb.g = 1.0;rgb.b = 0.0;
 
             printf("Color GREEN\n");
-            Choose_Display(shading_name);
 
             break;
         case GLUT_KEY_F3://F3 blue
             rgb.r = 0.0;rgb.g = 0.0;rgb.b = 1.0;
 
             printf("Color BLUE\n");
-            Choose_Display(shading_name);
 
             break;
         case GLUT_KEY_F4://F4 white grayscale
             rgb.r = 1.0;rgb.g = 1.0;rgb.b = 1.0;
 
             printf("Color WHITE\n");
-            Choose_Display(shading_name);
 
             break;
         case GLUT_KEY_PAGE_UP://PG UP rotate x axis
@@ -301,16 +283,12 @@ void keyboardSpecialKeys(int key, int x, int y)
 
             printf("Rotation X Axis(theta)=(%.3f)\n", theta);
 
-            Choose_Display(shading_name);
-
             break;
         case GLUT_KEY_PAGE_DOWN://PG DOWN rotate x axis
             theta -= 5;
             vec = Rotation_X_Axis_3D_Vertices(theta, trig, f_counter, vec, v_counter);
 
             printf("Rotation X Axis(theta)=(%.3f)\n", theta);
-
-            Choose_Display(shading_name);
 
             break;
         case GLUT_KEY_RIGHT://Right translation
@@ -319,16 +297,12 @@ void keyboardSpecialKeys(int key, int x, int y)
 
             printf("Translation X Axis(dx)=(%.3f)\n", transl);
 
-            Choose_Display(shading_name);
-
             break;
         case GLUT_KEY_LEFT://Left translation
             transl -= 10;
             vec = Translation_3D_Vertices(transl, 0.0, 0.0, trig, f_counter, vec, v_counter);
 
             printf("Translation X Axis(dx)=(%.3f)\n", transl);
-
-            Choose_Display(shading_name);
 
             break;
         case GLUT_KEY_UP://Up translation
@@ -337,8 +311,6 @@ void keyboardSpecialKeys(int key, int x, int y)
 
             printf("Translation Y Axis(dy)=(%.3f)\n", transl);
 
-            Choose_Display(shading_name);
-
             break;
         case GLUT_KEY_DOWN://Down translation
             transl -= 10;
@@ -346,10 +318,10 @@ void keyboardSpecialKeys(int key, int x, int y)
 
             printf("Translation Y Axis(dy)=(%.3f)\n", transl);
 
-            Choose_Display(shading_name);
-
             break;
     }
+
+    Choose_Display(shading_name);
 }
 
 void mouseMov(int button, int state, int x, int y)
@@ -369,8 +341,6 @@ void mouseMov(int button, int state, int x, int y)
 
             printf("Light(x, y, z)=(%.3f, %.3f, %.3f)\n", l.x, l.y, l.z);
 
-            Choose_Display(shading_name);
-
             break;
         case GLUT_RIGHT_BUTTON:
             if (state == GLUT_DOWN)
@@ -384,10 +354,10 @@ void mouseMov(int button, int state, int x, int y)
 
             printf("Camera(x, y, z)=(%.3f, %.3f, %.3f)\n", c.x, c.y, c.z);
 
-            Choose_Display(shading_name);
-
             break;
     }
+
+    Choose_Display(shading_name);
 }
 
 void Flat_Display()
