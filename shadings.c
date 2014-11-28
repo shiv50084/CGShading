@@ -151,7 +151,6 @@ void Lighting(float ka, float kd, float ks, float n, VECTOR3F N, VECTOR3F L, VEC
 void Flat_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors, int nCols, int nRows, COLOR rgb)
 {
     int minx = 0, maxx = 0, miny = 0, maxy = 0;
-    int i = 0, j = 0, vector = 0, triangle = 0;
     VECTOR3F VP, NV, BC, V1, V2, V3;
     COLOR CP, **Flat_Color_Buffer;
     float dotNVL = 0.0;
@@ -165,19 +164,19 @@ void Flat_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3F *
 
     /*Allocate memory and initializing for z buffer*/
     if( ( z_buffer = (float **)malloc( nCols * sizeof( float * ) ) ) != NULL )
-        for( i = 0; i < nCols; i++ )
+        for(int i = 0; i < nCols; i++)
             if( ( z_buffer[i] = (float *)malloc( nRows * sizeof( float ) ) ) != NULL )
             {
-                for(j=0;j<nRows;j++)
+                for(int j=0;j<nRows;j++)
                     z_buffer[i][j] = LARGE_VALUE;
             }
 
     /*Allocate memory and initializing for color buffer*/
     if( ( Flat_Color_Buffer = (COLOR **)malloc( nCols * sizeof( COLOR * ) ) ) != NULL )
-        for( i = 0; i < nCols; i++ )
+        for(int i = 0; i < nCols; i++)
             if( ( Flat_Color_Buffer[i] = (COLOR *)malloc( nRows * sizeof( COLOR ) ) ) != NULL )
             {
-                for(j=0;j<nRows;j++)
+                for(int j=0;j<nRows;j++)
                 {
                     Flat_Color_Buffer[i][j].r = 0.0;
                     Flat_Color_Buffer[i][j].g = 0.0;
@@ -189,7 +188,7 @@ void Flat_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3F *
     /*Normalize Light Vector*/
     V3Normalize(&L);
 
-    for (triangle = 0; triangle < max_triangles; triangle++)
+    for (int triangle = 0; triangle < max_triangles; triangle++)
     {
 
         dotNVL = 0.0;
@@ -245,12 +244,12 @@ void Flat_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3F *
     }
 
     /*Free memory for color buffer*/
-    for( i = 0; i < nCols; i++ )
+    for(int i = 0; i < nCols; i++)
         free(Flat_Color_Buffer[i]);
     free(Flat_Color_Buffer);
 
     /*Free memory for z buffer*/
-    for( i = 0; i < nCols; i++ )
+    for(int i = 0; i < nCols; i++)
         free(z_buffer[i]);
     free(z_buffer);
 }
@@ -258,9 +257,8 @@ void Flat_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3F *
 void Gouraud_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors, int nCols, int nRows, COLOR rgb)
 {
     int minx = 0, maxx = 0, miny = 0, maxy = 0;
-    int i = 0, j = 0, vector = 0, triangle = 0;
     VECTOR3F VP, *NV_Vertex, NV_Triangle, V1, V2, V3, NV1, NV2, NV3, BC;
-    float dotNV_Triangle = 0.0, dotNV1 = 0.0, dotNV2 = 0.0, dotNV3 = 0.0;
+    float dotNV1 = 0.0, dotNV2 = 0.0, dotNV3 = 0.0;
     COLOR C1, C2, C3, CP, **Gouraud_Color_Buffer;
     float **z_buffer;
 
@@ -273,19 +271,19 @@ void Gouraud_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3
 
     /*Allocate memory and initializing for z buffer*/
     if( ( z_buffer = (float **)malloc( nCols * sizeof( float * ) ) ) != NULL )
-        for( i = 0; i < nCols; i++ )
+        for(int i = 0; i < nCols; i++)
             if( ( z_buffer[i] = (float *)malloc( nRows * sizeof( float ) ) ) != NULL )
             {
-                for(j=0;j<nRows;j++)
+                for(int j=0;j<nRows;j++)
                     z_buffer[i][j] = LARGE_VALUE;
             }
 
     /*Allocate memory and initializing for color buffer*/
     if( ( Gouraud_Color_Buffer = (COLOR **)malloc( nCols * sizeof( COLOR * ) ) ) != NULL )
-        for( i = 0; i < nCols; i++ )
+        for(int i = 0; i < nCols; i++)
             if( ( Gouraud_Color_Buffer[i] = (COLOR *)malloc( nRows * sizeof( COLOR ) ) ) != NULL )
             {
-                for(j=0;j<nRows;j++)
+                for(int j=0;j<nRows;j++)
                 {
                     Gouraud_Color_Buffer[i][j].r = 0.0;
                     Gouraud_Color_Buffer[i][j].g = 0.0;
@@ -307,7 +305,7 @@ void Gouraud_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3
     /*Normalize Light Vector*/
     V3Normalize(&L);
 
-    for (triangle = 0; triangle < max_triangles; triangle++)
+    for (int triangle = 0; triangle < max_triangles; triangle++)
     {
 
         /*Edge coordinates of triangle*/
@@ -376,16 +374,15 @@ void Gouraud_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3
                     }
 
                 }
-
     }
 
     /*Free memory for color buffer*/
-    for( i = 0; i < nCols; i++ )
+    for(int i = 0; i < nCols; i++)
         free(Gouraud_Color_Buffer[i]);
     free(Gouraud_Color_Buffer);
 
     /*Free memory for z buffer*/
-    for( i = 0; i < nCols; i++ )
+    for(int i = 0; i < nCols; i++)
         free(z_buffer[i]);
     free(z_buffer);
 
@@ -395,11 +392,9 @@ void Gouraud_Shading(VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3
 void Phong_Shading(VECTOR3F C, VECTOR3F L, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors, int nCols, int nRows, COLOR rgb)
 {
     int minx = 0, maxx = 0, miny = 0, maxy = 0;
-    int i = 0, j = 0, vector = 0, triangle = 0;
     VECTOR3F VP, *NV_Vertex, V1, V2, V3, NV1, NV2, NV3, NVP, BC;
-    VECTOR3F Viewer;
-    float dotNVP = 0.0, dotNV1 = 0.0, dotNV2 = 0.0, dotNV3 = 0.0;
-    COLOR C1, C2, C3, CP, **Phong_Color_Buffer;
+    float dotNVP = 0.0;
+    COLOR CP, **Phong_Color_Buffer;
     float **z_buffer;
 
     /*Initialize local variables*/
@@ -412,19 +407,19 @@ void Phong_Shading(VECTOR3F C, VECTOR3F L, TRIANGLE *triangles, int max_triangle
 
     /*Allocate memory and initializing for z buffer*/
     if( ( z_buffer = (float **)malloc( nCols * sizeof( float * ) ) ) != NULL )
-        for( i = 0; i < nCols; i++ )
+        for(int i = 0; i < nCols; i++)
             if( ( z_buffer[i] = (float *)malloc( nRows * sizeof( float ) ) ) != NULL )
             {
-                for(j=0;j<nRows;j++)
+                for(int j=0;j<nRows;j++)
                     z_buffer[i][j] = LARGE_VALUE;
             }
 
     /*Allocate memory and initializing for color buffer*/
     if( ( Phong_Color_Buffer = (COLOR **)malloc( nCols * sizeof( COLOR * ) ) ) != NULL )
-        for( i = 0; i < nCols; i++ )
+        for(int i = 0; i < nCols; i++)
             if( ( Phong_Color_Buffer[i] = (COLOR *)malloc( nRows * sizeof( COLOR ) ) ) != NULL )
             {
-                for(j=0;j<nRows;j++)
+                for(int j=0;j<nRows;j++)
                 {
                     Phong_Color_Buffer[i][j].r = 0.0;
                     Phong_Color_Buffer[i][j].g = 0.0;
@@ -447,7 +442,7 @@ void Phong_Shading(VECTOR3F C, VECTOR3F L, TRIANGLE *triangles, int max_triangle
     /*Normalize Camera Vector*/
     V3Normalize(&C);
 
-    for (triangle = 0; triangle < max_triangles; triangle++)
+    for (int triangle = 0; triangle < max_triangles; triangle++)
     {
 
         /*Edge coordinates of triangle*/
@@ -501,16 +496,15 @@ void Phong_Shading(VECTOR3F C, VECTOR3F L, TRIANGLE *triangles, int max_triangle
                     }
 
                 }
-
     }
 
     /*Free memory for color buffer*/
-    for( i = 0; i < nCols; i++ )
+    for(int i = 0; i < nCols; i++)
         free(Phong_Color_Buffer[i]);
     free(Phong_Color_Buffer);
 
     /*Free memory for z buffer*/
-    for( i = 0; i < nCols; i++ )
+    for(int i = 0; i < nCols; i++)
         free(z_buffer[i]);
     free(z_buffer);
 
