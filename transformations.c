@@ -49,9 +49,9 @@ Locals         Type           Description
 ############################################################################ */
 void Translation_3D_Point(float dx, float dy, float dz, VECTOR3F *point_3d)
 {
-point_3d->x += dx;
-point_3d->y += dy;
-point_3d->z += dz;
+    point_3d->x += dx;
+    point_3d->y += dy;
+    point_3d->z += dz;
 }
 
 /* ############################################################################
@@ -82,34 +82,32 @@ Locals         Type           Description
 ############################################################################ */
 VECTOR3F *Translation_3D_Vertices(float dx, float dy, float dz, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Translation\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Translation\n", max_vectors);
+        exit(0);
+    }
 
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
+    for (int triangle = 0; triangle < max_triangles; triangle++)
+    {
 
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	Translation_3D_Point(dx, dy, dz, &V1);
-	Translation_3D_Point(dx, dy, dz, &V2);
-	Translation_3D_Point(dx, dy, dz, &V3);
+        Translation_3D_Point(dx, dy, dz, &V1);
+        Translation_3D_Point(dx, dy, dz, &V2);
+        Translation_3D_Point(dx, dy, dz, &V3);
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-return Output;
+    return Output;
 }
 
 
@@ -137,11 +135,9 @@ Locals         Type           Description
 ############################################################################ */
 void Scale_3D_Point(float sx, float sy, float sz, VECTOR3F *point_3d)
 {
-
-point_3d->x *= sx;
-point_3d->y *= sy;
-point_3d->z *= sz;
-
+    point_3d->x *= sx;
+    point_3d->y *= sy;
+    point_3d->z *= sz;
 }
 
 /* ############################################################################
@@ -173,32 +169,30 @@ Locals         Type           Description
 ############################################################################ */
 VECTOR3F* Scale_3D_Vertices(float sx, float sy, float sz, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Scale\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Scale\n", max_vectors);
+        exit(0);
+    }
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+    for (int triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	Scale_3D_Point(sx, sy, sz, &V1);
-	Scale_3D_Point(sx, sy, sz, &V2);
-	Scale_3D_Point(sx, sy, sz, &V3);
+        Scale_3D_Point(sx, sy, sz, &V1);
+        Scale_3D_Point(sx, sy, sz, &V2);
+        Scale_3D_Point(sx, sy, sz, &V3);
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-return Output;
+    return Output;
 }
 
 /* ############################################################################
@@ -223,17 +217,17 @@ temp_point	VECTOR3F	Temporary value of point_3d
 ############################################################################ */
 void Rotation_X_Axis_3D_Point(float theta, VECTOR3F *point_3d)
 {
-VECTOR3F temp_point;
+    VECTOR3F temp_point;
 
-temp_point.x = point_3d->x;
-temp_point.y = point_3d->y;
-temp_point.z = point_3d->z;
+    temp_point.x = point_3d->x;
+    temp_point.y = point_3d->y;
+    temp_point.z = point_3d->z;
 
-point_3d->y = temp_point.y*cos (theta*PI/180) - 
-			  temp_point.z*sin (theta*PI/180);
-point_3d->z = temp_point.y*sin (theta*PI/180) + 
-			  temp_point.z*cos (theta*PI/180);
-point_3d->x = temp_point.x;
+    point_3d->y = temp_point.y*cos (theta*PI/180) - 
+                              temp_point.z*sin (theta*PI/180);
+    point_3d->z = temp_point.y*sin (theta*PI/180) + 
+                              temp_point.z*cos (theta*PI/180);
+    point_3d->x = temp_point.x;
 }
 
 /* ############################################################################
@@ -261,32 +255,30 @@ Locals         	Type           	Description
 ############################################################################ */
 VECTOR3F* Rotation_X_Axis_3D_Vertices(float theta, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Rotation_X_Axis\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Rotation_X_Axis\n", max_vectors);
+        exit(0);
+    }
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+    for (int triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	Rotation_X_Axis_3D_Point(theta, &V1);
-	Rotation_X_Axis_3D_Point(theta, &V2);
-	Rotation_X_Axis_3D_Point(theta, &V3);
+        Rotation_X_Axis_3D_Point(theta, &V1);
+        Rotation_X_Axis_3D_Point(theta, &V2);
+        Rotation_X_Axis_3D_Point(theta, &V3);
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-return Output;
+    return Output;
 }
 
 /* ############################################################################
@@ -311,17 +303,17 @@ temp_point	VECTOR3F	Temporary value of point_3d
 ############################################################################ */
 void Rotation_Y_Axis_3D_Point(float theta, VECTOR3F *point_3d)
 {
-VECTOR3F temp_point;
+    VECTOR3F temp_point;
 
-temp_point.x = point_3d->x;
-temp_point.y = point_3d->y;
-temp_point.z = point_3d->z;
+    temp_point.x = point_3d->x;
+    temp_point.y = point_3d->y;
+    temp_point.z = point_3d->z;
 
-point_3d->z = temp_point.z*cos (theta*PI/180) - 
-			  temp_point.x*sin (theta*PI/180);
-point_3d->x = temp_point.z*sin (theta*PI/180) + 
-			  temp_point.x*cos (theta*PI/180);
-point_3d->y = temp_point.y;
+    point_3d->z = temp_point.z*cos (theta*PI/180) - 
+                              temp_point.x*sin (theta*PI/180);
+    point_3d->x = temp_point.z*sin (theta*PI/180) + 
+                              temp_point.x*cos (theta*PI/180);
+    point_3d->y = temp_point.y;
 }
 
 /* ############################################################################
@@ -349,32 +341,30 @@ Locals         	Type           	Description
 ############################################################################ */
 VECTOR3F* Rotation_Y_Axis_3D_Vertices(float theta, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Rotation_Y_Axis\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Rotation_Y_Axis\n", max_vectors);
+        exit(0);
+    }
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+    for (int triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	Rotation_Y_Axis_3D_Point(theta, &V1);
-	Rotation_Y_Axis_3D_Point(theta, &V2);
-	Rotation_Y_Axis_3D_Point(theta, &V3);
+        Rotation_Y_Axis_3D_Point(theta, &V1);
+        Rotation_Y_Axis_3D_Point(theta, &V2);
+        Rotation_Y_Axis_3D_Point(theta, &V3);
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-return Output;
+    return Output;
 }
 
 /* ############################################################################
@@ -399,17 +389,17 @@ temp_point	VECTOR3F	Temporary value of point_3d
 ############################################################################ */
 void Rotation_Z_Axis_3D_Point(float theta, VECTOR3F *point_3d)
 {
-VECTOR3F temp_point;
+    VECTOR3F temp_point;
 
-temp_point.x = point_3d->x;
-temp_point.y = point_3d->y;
-temp_point.z = point_3d->z;
+    temp_point.x = point_3d->x;
+    temp_point.y = point_3d->y;
+    temp_point.z = point_3d->z;
 
-point_3d->x = temp_point.x*cos (theta*PI/180) - 
-			  temp_point.y*sin (theta*PI/180);
-point_3d->y = temp_point.x*sin (theta*PI/180) + 
-		      temp_point.y*cos (theta*PI/180);
-point_3d->z = temp_point.z;
+    point_3d->x = temp_point.x*cos (theta*PI/180) - 
+                              temp_point.y*sin (theta*PI/180);
+    point_3d->y = temp_point.x*sin (theta*PI/180) + 
+                          temp_point.y*cos (theta*PI/180);
+    point_3d->z = temp_point.z;
 }
 
 /* ############################################################################
@@ -437,32 +427,30 @@ Locals         	Type           	Description
 ############################################################################ */
 VECTOR3F* Rotation_Z_Axis_3D_Vertices(float theta, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Rotation_Z_Axis\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Rotation_Z_Axis\n", max_vectors);
+        exit(0);
+    }
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+    for (int triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	Rotation_Z_Axis_3D_Point(theta, &V1);
-	Rotation_Z_Axis_3D_Point(theta, &V2);
-	Rotation_Z_Axis_3D_Point(theta, &V3);
+        Rotation_Z_Axis_3D_Point(theta, &V1);
+        Rotation_Z_Axis_3D_Point(theta, &V2);
+        Rotation_Z_Axis_3D_Point(theta, &V3);
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-return Output;
+    return Output;
 }
 
 /* ############################################################################
@@ -491,20 +479,20 @@ Locals         Type           Description
 ############################################################################ */
 void Rotation_Arbitrary_Axis_3D_Point(float ux, float uy, float uz, float theta, VECTOR3F *point_3d)
 {
-/*(1) translate space so that the rotation axis passes through the origin*/
-Translation_3D_Point(ux, uy, uz, point_3d);
-/*(2) rotate space about the x axis so that the rotation axis lies in the xz plane*/
-Rotation_X_Axis_3D_Point(-90.0, point_3d);
-/*(3) rotate space about the y axis so that the rotation axis lies along the z axis*/
-Rotation_Y_Axis_3D_Point(-90.0, point_3d);
-/*(4) perform the desired rotation by theta about the z axis*/
-Rotation_Z_Axis_3D_Point(theta, point_3d);
-/*(5) apply the inverse of step (3)*/
-Rotation_Y_Axis_3D_Point(90.0, point_3d);
-/*(6) apply the inverse of step (2)*/
-Rotation_X_Axis_3D_Point(90.0, point_3d);
-/*(7) apply the inverse of step (1)*/
-Translation_3D_Point(-1.0*ux, -1.0*uy, -1.0*uz, point_3d);
+    /*(1) translate space so that the rotation axis passes through the origin*/
+    Translation_3D_Point(ux, uy, uz, point_3d);
+    /*(2) rotate space about the x axis so that the rotation axis lies in the xz plane*/
+    Rotation_X_Axis_3D_Point(-90.0, point_3d);
+    /*(3) rotate space about the y axis so that the rotation axis lies along the z axis*/
+    Rotation_Y_Axis_3D_Point(-90.0, point_3d);
+    /*(4) perform the desired rotation by theta about the z axis*/
+    Rotation_Z_Axis_3D_Point(theta, point_3d);
+    /*(5) apply the inverse of step (3)*/
+    Rotation_Y_Axis_3D_Point(90.0, point_3d);
+    /*(6) apply the inverse of step (2)*/
+    Rotation_X_Axis_3D_Point(90.0, point_3d);
+    /*(7) apply the inverse of step (1)*/
+    Translation_3D_Point(-1.0*ux, -1.0*uy, -1.0*uz, point_3d);
 }
 
 /* ############################################################################
@@ -538,31 +526,29 @@ Locals         Type           Description
 ############################################################################ */
 VECTOR3F* Rotation_Arbitrary_Axis_3D_Vertices(float ux, float uy, float uz, float theta, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-int minx = 0, maxx = 0, miny = 0, maxy = 0;
-int i = 0, j = 0, vector = 0, triangle = 0;
-VECTOR3F V1, V2, V3, *Output;
+    VECTOR3F V1, V2, V3, *Output;
 
-if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
-	{
-	printf("ERROR ALLOCATING (%u) Rotation_Arbitrary_Axis\n", max_vectors);
-	exit(0);
-	}
+    if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
+    {
+        printf("ERROR ALLOCATING (%u) Rotation_Arbitrary_Axis\n", max_vectors);
+        exit(0);
+    }
 
-for (triangle = 0; triangle < max_triangles; triangle++)
-	{
-	V1 = vectors[triangles[triangle].v1];
-	V2 = vectors[triangles[triangle].v2];
-	V3 = vectors[triangles[triangle].v3];
+    for (int triangle = 0; triangle < max_triangles; triangle++)
+    {
+        V1 = vectors[triangles[triangle].v1];
+        V2 = vectors[triangles[triangle].v2];
+        V3 = vectors[triangles[triangle].v3];
 
-	Rotation_Arbitrary_Axis_3D_Point(ux, uy, uz, theta, &V1);
-	Rotation_Arbitrary_Axis_3D_Point(ux, uy, uz, theta, &V2);
-	Rotation_Arbitrary_Axis_3D_Point(ux, uy, uz, theta, &V3);
+        Rotation_Arbitrary_Axis_3D_Point(ux, uy, uz, theta, &V1);
+        Rotation_Arbitrary_Axis_3D_Point(ux, uy, uz, theta, &V2);
+        Rotation_Arbitrary_Axis_3D_Point(ux, uy, uz, theta, &V3);
 
-	Output[triangles[triangle].v1] = V1;
-	Output[triangles[triangle].v2] = V2;
-	Output[triangles[triangle].v3] = V3;
-	}
+        Output[triangles[triangle].v1] = V1;
+        Output[triangles[triangle].v2] = V2;
+        Output[triangles[triangle].v3] = V3;
+    }
 
-return Output;
+    return Output;
 }
 
