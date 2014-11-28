@@ -51,8 +51,6 @@ void Parallel_Projection_3D_Point(VECTOR3F LeftBottomNear, VECTOR3F RightTopFar,
 
 VECTOR3F *Parallel_Projection_3D_Vertices(VECTOR3F LeftBottomNear, VECTOR3F RightTopFar, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-    int minx = 0, maxx = 0, miny = 0, maxy = 0;
-    int i = 0, j = 0, vector = 0, triangle = 0;
     VECTOR3F V1, V2, V3, *Output;
 
     if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
@@ -62,7 +60,7 @@ VECTOR3F *Parallel_Projection_3D_Vertices(VECTOR3F LeftBottomNear, VECTOR3F Righ
     }
 
 
-    for (triangle = 0; triangle < max_triangles; triangle++)
+    for (int triangle = 0; triangle < max_triangles; triangle++)
     {
         V1 = vectors[triangles[triangle].v1];
         V2 = vectors[triangles[triangle].v2];
@@ -98,8 +96,6 @@ void Parallel_Projection_3D_Point_Simple(VECTOR3F *point_3d)
 
 VECTOR3F *Parallel_Projection_3D_Vertices_Simple(TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-    int minx = 0, maxx = 0, miny = 0, maxy = 0;
-    int i = 0, j = 0, vector = 0, triangle = 0;
     VECTOR3F V1, V2, V3, *Output;
 
     if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
@@ -109,7 +105,7 @@ VECTOR3F *Parallel_Projection_3D_Vertices_Simple(TRIANGLE *triangles, int max_tr
     }
 
 
-    for (triangle = 0; triangle < max_triangles; triangle++)
+    for (int triangle = 0; triangle < max_triangles; triangle++)
     {
         V1 = vectors[triangles[triangle].v1];
         V2 = vectors[triangles[triangle].v2];
@@ -153,8 +149,6 @@ void Perspective_Projection_3D_Point(VECTOR3F LeftBottomNear, VECTOR3F RightTopF
 
 VECTOR3F *Perspective_Projection_3D_Vertices(VECTOR3F LeftBottomNear, VECTOR3F RightTopFar, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-    int minx = 0, maxx = 0, miny = 0, maxy = 0;
-    int i = 0, j = 0, vector = 0, triangle = 0;
     VECTOR3F V1, V2, V3, *Output;
 
     if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
@@ -164,7 +158,7 @@ VECTOR3F *Perspective_Projection_3D_Vertices(VECTOR3F LeftBottomNear, VECTOR3F R
     }
 
 
-    for (triangle = 0; triangle < max_triangles; triangle++)
+    for (int triangle = 0; triangle < max_triangles; triangle++)
     {
         V1 = vectors[triangles[triangle].v1];
         V2 = vectors[triangles[triangle].v2];
@@ -203,8 +197,6 @@ void Perspective_Projection_3D_Point_Simple(float d, VECTOR3F *point_3d)
 
 VECTOR3F *Perspective_Projection_3D_Vertices_Simple(float d, TRIANGLE *triangles, int max_triangles, VECTOR3F *vectors, int max_vectors)
 {
-    int minx = 0, maxx = 0, miny = 0, maxy = 0;
-    int i = 0, j = 0, vector = 0, triangle = 0;
     VECTOR3F V1, V2, V3, *Output;
 
     if (( Output = (VECTOR3F *) malloc(max_vectors * sizeof(VECTOR3F) ) ) == NULL)
@@ -214,7 +206,7 @@ VECTOR3F *Perspective_Projection_3D_Vertices_Simple(float d, TRIANGLE *triangles
     }
 
 
-    for (triangle = 0; triangle < max_triangles; triangle++)
+    for (int triangle = 0; triangle < max_triangles; triangle++)
     {
         V1 = vectors[triangles[triangle].v1];
         V2 = vectors[triangles[triangle].v2];
