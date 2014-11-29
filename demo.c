@@ -17,8 +17,7 @@ char            shading_name[20];
 float	_xmax = 0.0, _xmin = 0.0,
 	_ymax = 0.0, _ymin = 0.0,
 	_zmin = 0.0, _zmax = 0.0;
-int 	v_counter = 0, f_counter = 0,
-	i_v = 0, i_f = 0;
+int 	v_counter = 0, f_counter = 0;
 
 int nRows = 640;
 int nCols = 480;
@@ -29,11 +28,17 @@ void TriangleMesh_LoadFile(char *filename)
     char    buf[1024];
     char    header = 0;
     float   x = 0.0, y = 0.0, z = 0.0;
-    float   xmax = 0.0, ymax = 0.0, zmax = 0.0,
-            xmin = 0.0, ymin = 0.0, zmin = 0.0;
+    float   xmax = -1000.0, ymax = -1000.0, zmax = -1000.0,
+            xmin =  1000.0, ymin =  1000.0, zmin =  1000.0;
     int     v1 = 0, v2 = 0, v3 = 0;
 
+    VECTOR3F *vec_tmp = NULL;
+    TRIANGLE *trig_tmp = NULL;
+
     memset(buf, 0, sizeof(buf));
+
+    VECTOR3F av;
+    av.x = av.y = av.z = 0.0;
 
     if((fp = fopen(filename, "r")) == NULL)
     {
@@ -53,59 +58,31 @@ void TriangleMesh_LoadFile(char *filename)
             sscanf(buf, "%c", &header);
 
             if (header == 'v')
-                v_counter++;
-            else if (header == 'f')
-                f_counter++;
-            else
-                continue;
-
-        }
-    }
-
-    /*File pointer at the beginning*/
-    rewind(fp);
-
-    /*Allocating bytes for vertices and triangles*/
-    if (( vec = (VECTOR3F *) malloc(v_counter * sizeof(VECTOR3F) ) ) == NULL)
-    {
-        printf("ERROR ALLOCATING (%u) vec\n", v_counter);
-        exit(0);
-    }
-
-    if (( trig = (TRIANGLE *) malloc(f_counter * sizeof(TRIANGLE) ) ) == NULL)
-    {
-        printf("ERROR ALLOCATING (%u) trig\n", f_counter);
-        exit(0);
-    }
-
-
-    memset(buf, 0, sizeof(buf));
-
-    xmax = -1000; ymax = -1000; zmax = -1000;
-    xmin =  1000; ymin =  1000; zmin =  1000;
-
-    VECTOR3F av;
-    av.x = av.y = av.z = 0.0;
-
-    i_v = 0, i_f = 0;
-
-    while (!feof(fp))
-    {
-        memset(buf, 0, sizeof(buf));
-
-        while (fgets(buf, sizeof(buf), fp) != NULL) /* read a line */
-        {
-            header = 0;
-
-            sscanf(buf, "%c", &header);
-
-            if (header == 'v')
             {
                 sscanf(buf, "%c %f %f %f", &header, &x, &y, &z);
 
-                vec[i_v].x = x;
-                vec[i_v].y = y;
-                vec[i_v].z = z;
+                v_counter++;
+
+                vec_tmp = realloc(vec, v_counter * sizeof(VECTOR3F));
+                if (vec_tmp != NULL)
+                {
+                    vec = vec_tmp;
+                }
+                else
+                {
+                    if (vec)
+                        free(vec);
+
+                    if (vec_tmp)
+                        free(vec_tmp);
+
+                    printf("Realloc error in vec!!!\n");
+                    return;
+                }
+
+                vec[v_counter - 1].x = x;
+                vec[v_counter - 1].y = y;
+                vec[v_counter - 1].z = z;
 
                 av.x += x; av.y += y; av.z += z;
 
@@ -122,20 +99,39 @@ void TriangleMesh_LoadFile(char *filename)
                     ymin = y;
                 if (z < zmin)
                     zmin = z;
-                i_v++;
+
             }
             else if (header == 'f')
             {
                 sscanf(buf, "%c %d %d %d", &header, &v1, &v2, &v3);
 
-                trig[i_f].v1 = v1 - 1;
-                trig[i_f].v2 = v2 - 1;
-                trig[i_f].v3 = v3 - 1;
+                f_counter++;
 
-                i_f++;
+                trig_tmp = realloc(trig, f_counter * sizeof(TRIANGLE));
+                if (trig_tmp != NULL)
+                {
+                    trig = trig_tmp;
+                }
+                else
+                {
+                    if (trig)
+                        free(trig);
+
+                    if (trig_tmp)
+                        free(trig_tmp);
+
+                    printf("Realloc error in trig!!!\n");
+                    return;
+                }
+
+                trig[f_counter - 1].v1 = v1 - 1;
+                trig[f_counter - 1].v2 = v2 - 1;
+                trig[f_counter - 1].v3 = v3 - 1;
+
             }
             else
                 continue;
+
         }
     }
 
@@ -148,18 +144,18 @@ void TriangleMesh_LoadFile(char *filename)
     else
         range = ymax-ymin;
 
-    av.x /= i_v;
-    av.y /= i_v;
-    av.z /= i_v;
+    av.x /= v_counter;
+    av.y /= v_counter;
+    av.z /= v_counter;
 
-    for (int i = 0; i < i_v; i++)
+    for (int i = 0; i < v_counter; i++)
     {
         vec[i].x = (vec[i].x - av.x)/range*400;
         vec[i].y = (vec[i].y - av.y)/range*400;
         vec[i].z = (vec[i].z - av.z)/range*400;
     }
 
-    printf("trig: %u vertices: %u\n", i_f, i_v);
+    printf("trig: %u vertices: %u\n", f_counter, v_counter);
 
     fclose(fp);
 }
