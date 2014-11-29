@@ -27,14 +27,13 @@ void TriangleMesh_LoadFile(char *filename)
 {
     FILE    *fp;
     char    buf[1024];
-    char    header[100];
+    char    header = 0;
     float   x = 0.0, y = 0.0, z = 0.0;
     float   xmax = 0.0, ymax = 0.0, zmax = 0.0,
             xmin = 0.0, ymin = 0.0, zmin = 0.0;
     int     v1 = 0, v2 = 0, v3 = 0;
 
     memset(buf, 0, sizeof(buf));
-    memset(header, 0, sizeof(header));
 
     if((fp = fopen(filename, "r")) == NULL)
     {
@@ -49,13 +48,13 @@ void TriangleMesh_LoadFile(char *filename)
 
         while (fgets(buf, sizeof(buf), fp) != NULL) /* read a line */
         {
-            memset(header, 0, sizeof(header));
+            header = 0;
 
-            sscanf(buf, "%s", header);
+            sscanf(buf, "%c", &header);
 
-            if (strcmp(header, "v") == 0)
+            if (header == 'v')
                 v_counter++;
-            else if (strcmp(header, "f") == 0)
+            else if (header == 'f')
                 f_counter++;
             else
                 continue;
@@ -81,7 +80,6 @@ void TriangleMesh_LoadFile(char *filename)
 
 
     memset(buf, 0, sizeof(buf));
-    memset(header, 0, sizeof(header));
 
     xmax = -1000; ymax = -1000; zmax = -1000;
     xmin =  1000; ymin =  1000; zmin =  1000;
@@ -97,13 +95,13 @@ void TriangleMesh_LoadFile(char *filename)
 
         while (fgets(buf, sizeof(buf), fp) != NULL) /* read a line */
         {
-            memset(header, 0, sizeof(header));
+            header = 0;
 
-            sscanf(buf, "%s", header);
+            sscanf(buf, "%c", &header);
 
-            if (strcmp(header, "v") == 0)
+            if (header == 'v')
             {
-                sscanf(buf, "%s %f %f %f", header, &x, &y, &z);
+                sscanf(buf, "%c %f %f %f", &header, &x, &y, &z);
 
                 vec[i_v].x = x;
                 vec[i_v].y = y;
@@ -126,9 +124,9 @@ void TriangleMesh_LoadFile(char *filename)
                     zmin = z;
                 i_v++;
             }
-            else if (strcmp(header, "f") == 0)
+            else if (header == 'f')
             {
-                sscanf(buf, "%s %d %d %d", header, &v1, &v2, &v3);
+                sscanf(buf, "%c %d %d %d", &header, &v1, &v2, &v3);
 
                 trig[i_f].v1 = v1 - 1;
                 trig[i_f].v2 = v2 - 1;
