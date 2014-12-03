@@ -57,6 +57,7 @@ void TriangleMesh_LoadFile(char *filename)
 
             sscanf(buf, "%c", &header);
 
+            // Get the vertices with (x,y,z) coordinates.
             if (header == 'v')
             {
                 sscanf(buf, "%c %f %f %f", &header, &x, &y, &z);
@@ -101,6 +102,7 @@ void TriangleMesh_LoadFile(char *filename)
                     zmin = z;
 
             }
+            // Get face definitions with vertices (v1, v2, v3)
             else if (header == 'f')
             {
                 sscanf(buf, "%c %d %d %d", &header, &v1, &v2, &v3);
