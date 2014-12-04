@@ -115,8 +115,11 @@ int parse_file(const char *filename, uint32_t *vertices_count, uint32_t *faces_c
 
                     fprintf(stdout, "%u - %c %d %d %d\n", *faces_count, start_line, (*f)[*faces_count - 1].v1, (*f)[*faces_count - 1].v2, (*f)[*faces_count - 1].v3);
                     break;
+                case '\n':
+                case '#':
+                    break;
                 default:
-                    fprintf(stdout, "Not known start line %c\n", start_line);
+                    fprintf(stdout, "Not known start line '%c'\n", start_line);
                     break;
             }
 
@@ -143,6 +146,11 @@ int main(int argc, char *argv[])
     const char* filename = argv[1];
 
     parse_file(filename, &v_c, &f_c, &v, &f, &tm);
+
+    for (uint32_t i = 0;i<v_c;i++)
+    {
+        fprintf(stdout, "%u - %f %f %f\n", i, v[i].x, v[i].y, v[i].z);
+    }
 
     if (v)
         free(v);
